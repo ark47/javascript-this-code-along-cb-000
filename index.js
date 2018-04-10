@@ -6,7 +6,7 @@ function Sandwich(bread, ingredients, name) {
   this.name = name;
   this.describe = function() {
     console.log("Your " + this.name + " includes: " + this.ingredients.join(", ") + ". Yum!");
-  }
+  };
 }
 
 function serve() {
@@ -24,11 +24,34 @@ var reuben = new Sandwich("rye", ["corned beef","sauerkraut","swiss","russian dr
 var gc = new Sandwich("white", ["cheese"], "Grilled Cheese");
 var pbj = new Sandwich("wheat", ["peanut butter", "raspberry jam"], "Peanut Butter & Jelly");
 
-function deliverFood(customer, table) {
-  console.log("Delivering " + this.name + " to " + customer + " at table " + table);
-}
-
 var salad = {
   ingredients: ["croutons", "romaine hearts", "steak", "parmesan", "caesar dressing"],
   name: "Steak Caesar"
+};
+
+function deliverFood(customer, table) {
+  console.log("Delivering " + this.name + " to " + customer + " at table " + table + ".");
 }
+
+function visitTable() {
+  console.log("The server is visiting " + this.name + " at table number " + this.tableNumber);
+}
+
+function Customer(name, tableNumber) {
+  this.name = name;
+  this.tableNumber = tableNumber;
+}
+
+// .call()
+pbj.describe.call(salad);
+
+// .apply()
+serve.apply(pbj, ["Bear", "Tim", "Steve"]);
+
+// .bind()
+salad.describe = pbj.describe.bind(salad);
+salad.describe();
+
+var sally = new Customer("Sally", "4");
+var visitSally = visitTable.bind(sally);
+setTimeout(visitSally, 5000);
